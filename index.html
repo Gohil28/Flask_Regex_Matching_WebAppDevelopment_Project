@@ -1,0 +1,191 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask Project : Regex Matching Web App</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: linear-gradient(to right top, #667eea, #764ba2, #8a4baf, #a54c98, #be4d78);
+            color: #333;
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-gap: 20px;
+        }
+
+        .form-container,
+        .result-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        }
+
+        h1, h2, h3 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        label {
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .result {
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            margin-bottom: 5px;
+        }
+
+        .error {
+            color: red;
+        }
+
+    </style>
+</head>
+<body><br>
+    <h1 style="position: sticky;color:black;font-size: larger;">Flask Project : Regex Matching Web App</h1>
+    <div class="container">
+        <div class="form-container">
+            <h1>Input Details</h1>
+            <form action="/results" method="POST">
+                <label for="test_string">Test String:</label>
+                <input type="text" id="test_string" name="test_string" required>
+                <label for="regex_pattern">Regex Pattern:</label>
+                <input type="text" id="regex_pattern" name="regex_pattern" required>
+                <button type="submit">Find Matches</button>
+            </form>
+   
+            <div class="form-container">
+                <h1>Email Validation</h1>
+                <form action="/validate-email" method="POST">
+                    <label for="email">Email Address:</label>
+                    <input type="text" id="email" name="email" required>
+                    <button type="submit">Validate Email</button>
+                </form>
+            </div>
+     </div>
+        
+        <div class="result-container">
+            {% if matches %}
+            <h2>Results</h2>
+            <div class="result">
+                <h3>Input Details:</h3>
+                <table>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Value</th>
+                    </tr>
+                    <tr>
+                        <td>Test String:</td>
+                        <td>{{ test_string }}</td>
+                    </tr>
+                    <tr>
+                        <td>Regex Pattern:</td>
+                        <td>{{ regex_pattern }}</td>
+                    </tr>
+                </table>
+                <h3>Matches:</h3>
+                <ul>
+                    {% for match in matches %}
+                    <li>{{ match }}</li>
+                    {% endfor %}
+                </ul>
+                <p>Total Matches: {{ num_matches }}</p>
+                <p>Digit or String Count: {{ digit_or_string_count }}</p>
+            </div>
+            {% endif %}
+
+            {% if email %}
+            <h2>Email Validation Result</h2>
+            <div class="result">
+                <h3>Input Details:</h3>
+                <table>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Value</th>
+                    </tr>
+                    <tr>
+                        <td>Email:</td>
+                        <td>{{ email }}</td>
+                    </tr>
+                    <tr>
+                        <td>Validation Status:</td>
+                        <td>{% if is_valid %}Valid{% else %}Invalid{% endif %}</td>
+                    </tr>
+                </table>
+                <p>{{ result_message }}</p>
+            </div>
+            {% endif %}
+
+        </div>
+    </div>
+    <h2 style="color: black;background-color: white;">Made by chirag gohil </h2>
+</body>
+</html>
